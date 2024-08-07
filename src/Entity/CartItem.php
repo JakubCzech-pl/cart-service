@@ -32,9 +32,4 @@ class CartItem extends CartItemModel
 
     #[ORM\Column(type: 'float', nullable: false)]
     protected float $price;
-
-    public function __construct(CartInterface $cart, ProductInterface $product, float $price, int $quantity)
-    {
-        parent::__construct($cart, $product, $price, $quantity);
-    }
 }

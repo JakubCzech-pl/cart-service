@@ -11,7 +11,7 @@ class Product implements ProductInterface
     protected float $price;
     protected bool $isAvailable;
 
-    public function __construct(string $name, int $price, bool $isAvailable)
+    public function __construct(string $name, float $price, bool $isAvailable)
     {
         $this->name = $name;
         $this->price = $price;

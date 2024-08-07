@@ -16,4 +16,5 @@ interface CartInterface extends EntityInterface
     public function removeItem(ItemInterface $item): void;
     public function getTotalPrice(): float;
     public function getTotalQuantity(): int;
+    public function isActive(): bool;
 }

@@ -12,9 +12,11 @@ class Cart implements CartInterface
 {
     protected int $id;
     protected Collection $items;
+    protected bool $isActive;
 
-    public function __construct(CartItemInterface ...$items)
+    public function __construct(bool $isActive, CartItemInterface ...$items)
     {
+        $this->isActive = $isActive;
         $this->items = new ArrayCollection($items);
     }
 
@@ -59,5 +61,10 @@ class Cart implements CartInterface
         }
 
         return $qty;
+    }
+
+    public function isActive(): bool
+    {
+       return $this->isActive;
     }
 }

@@ -25,9 +25,4 @@ class Product extends ProductModel
 
     #[ORM\Column(type: "boolean")]
     protected bool $isAvailable;
-
-    public function __construct(string $name, int $price, bool $isAvailable)
-    {
-        parent::__construct($name, $price, $isAvailable);
-    }
 }

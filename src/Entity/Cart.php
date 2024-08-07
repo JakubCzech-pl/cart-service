@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Model\Cart as CartModel;
-use App\Model\CartItemInterface;
 use App\Repository\CartRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,8 +21,6 @@ class Cart extends CartModel
     #[ORM\OneToMany(targetEntity: 'CartItem', mappedBy: 'cart', cascade: ['persist', 'remove'], orphanRemoval: true)]
     protected Collection $items;
 
-    public function __construct(CartItemInterface ...$items)
-    {
-        parent::__construct(...$items);
-    }
+    #[ORM\Column(type: "boolean")]
+    protected bool $isActive;
 }
