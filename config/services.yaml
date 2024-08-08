@@ -20,5 +20,24 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    serializer.normalizer.object:
+        class: Symfony\Component\Serializer\Normalizer\ObjectNormalizer
+
+    serializer.encoder.json:
+        class: Symfony\Component\Serializer\Encoder\JsonEncoder
+
+    App\Messenger\MessageSerializer:
+        arguments:
+            $serializer: '@app.message_serializer'
+
+    app.message_serializer:
+        class: Symfony\Component\Serializer\Serializer
+        arguments:
+            - ['@serializer.normalizer.object']
+            - ['@serializer.encoder.json']
+
+    App\Listener\ExceptionListener:
+        tags:
+            - {name: kernel.event_listener, event: kernel.exception}
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Exception\EntityCandidate\Cart;
+namespace App\Exception\Cart\EntityCandidate;
 
-use App\Exception\EntityCandidate\EntityCandidateArgumentException;
+use App\Exception\EntityCandidateArgumentException;
 
 class NotPositiveProductQuantityException extends EntityCandidateArgumentException
 {

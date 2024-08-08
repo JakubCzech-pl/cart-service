@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Exception\EntityCandidate;
+namespace App\Exception;
 
 class EntityCandidateArgumentException extends \Exception
 {

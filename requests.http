@@ -1,0 +1,20 @@
+### Create Product
+
+POST http://symfony.test/catalog/product
+Content-Type: application/json
+
+{
+  "name": "cvcvcvcv",
+  "price": 154,
+  "isAvailable": false
+}
+
+### Show Product
+
+GET http://symfony.test/catalog/product/6
+Content-Type: application/json
+
+### Create Cart
+
+POST http://symfony.test/cart/create
+Content-Type: application/json

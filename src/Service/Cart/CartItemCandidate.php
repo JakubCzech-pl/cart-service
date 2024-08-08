@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Cart;
 
 use App\Entity\CartItem;
-use App\Exception\EntityCandidate\Cart\InactiveCartException;
-use App\Exception\EntityCandidate\Cart\NotPositiveProductQuantityException;
-use App\Exception\EntityCandidate\Cart\ProductNotAvailableException;
-use App\Exception\EntityCandidate\EntityCandidateArgumentException;
+use App\Exception\Cart\EntityCandidate\InactiveCartException;
+use App\Exception\Cart\EntityCandidate\NotPositiveProductQuantityException;
+use App\Exception\Cart\EntityCandidate\ProductNotAvailableException;
+use App\Exception\EntityCandidateArgumentException;
 use App\Model\CartInterface;
 use App\Model\EntityInterface;
 use App\Model\ProductInterface;

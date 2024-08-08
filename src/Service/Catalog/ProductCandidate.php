@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Service\Catalog;
 
 use App\Entity\Product;
-use App\Exception\EntityCandidate\Catalog\InvalidProductNameLengthException;
-use App\Exception\EntityCandidate\Catalog\NegativeProductPriceException;
-use App\Exception\EntityCandidate\EntityCandidateArgumentException;
+use App\Exception\Catalog\EntityCandidate\NegativeProductPriceException;
+use App\Exception\Catalog\EntityCandidate\ProductNameTooLongException;
+use App\Exception\Catalog\EntityCandidate\ProductNameTooShortException;
+use App\Exception\EntityCandidateArgumentException;
 use App\Model\EntityInterface;
 use App\Service\EntityCandidateInterface;
 
@@ -43,28 +44,37 @@ class ProductCandidate implements EntityCandidateInterface
     }
 
     /**
-     * @throws InvalidProductNameLengthException
+     * @throws ProductNameTooShortException|ProductNameTooLongException
      */
     private function validateName(string $name): void
     {
-        $length = \mb_strlen($name);
-        if ($this->isNameLengthValid($length)) {
-            return;
-        }
-
-        throw new InvalidProductNameLengthException(
-            \sprintf(
-                'Name should have at least %s and max %s characters',
-                self::MIN_PRODUCT_NAME_LENGTH,
-                self::MAX_PRODUCT_NAME_LENGTH
-            )
+        $this->validateProductNameLength(
+            \mb_strlen($name)
         );
     }
 
-    private function isNameLengthValid(int $nameLength): bool
+    /**
+     * @throws ProductNameTooShortException|ProductNameTooLongException
+     */
+    private function validateProductNameLength(int $nameLength): void
     {
-        return $nameLength >= self::MIN_PRODUCT_NAME_LENGTH &&
-            $nameLength <= self::MAX_PRODUCT_NAME_LENGTH;
+        if ($nameLength < self::MIN_PRODUCT_NAME_LENGTH) {
+            throw new ProductNameTooShortException(
+                \sprintf(
+                    'Product name should be at least %s characters long',
+                    self::MIN_PRODUCT_NAME_LENGTH
+                )
+            );
+        }
+
+        if ($nameLength > self::MAX_PRODUCT_NAME_LENGTH) {
+            throw new ProductNameTooLongException(
+                \sprintf(
+                    'Product name should be less than %s characters long',
+                    self::MAX_PRODUCT_NAME_LENGTH
+                )
+            );
+        }
     }
 
     /**
