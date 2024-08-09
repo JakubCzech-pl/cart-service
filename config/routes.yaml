@@ -2,4 +2,5 @@ controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
+        defaults: {_format: json}
     type: attribute
