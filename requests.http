@@ -19,6 +19,11 @@ Content-Type: application/json
 POST http://symfony.test/cart
 Content-Type: application/json
 
+### Show Cart
+
+GET http://symfony.test/cart/1
+Content-Type: application/json
+
 ### Add Product To cart
 
 PUT http://symfony.test/cart
@@ -49,3 +54,31 @@ Content-Type: application/json
   "cartItemId": 8,
   "quantity": 5
 }
+
+### Create Address
+
+POST http://symfony.test/address
+Content-Type: application/json
+
+{
+  "person": {
+    "firstName": "Jan",
+    "lastName": "Nowak",
+    "phoneNumber": "+48 123"
+  },
+  "region": {
+    "regionName": "Podkarpacie",
+    "postCode": "35-001",
+    "countryCode": "PL",
+    "city": "Rzeszów"
+  },
+  "street":{
+    "streetName": "Plac Wolności",
+    "streetNumber": "1"
+  }
+}
+
+### Show Address
+
+GET http://symfony.test/address/1
+Content-Type: application/json

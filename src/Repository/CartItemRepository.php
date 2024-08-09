@@ -6,29 +6,26 @@ namespace App\Repository;
 
 use App\Entity\CartItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CartItemRepository extends ServiceEntityRepository
 {
-    public function __construct(
-        ManagerRegistry $registry,
-        private EntityManagerInterface $entityManager
-    ) {
+    public function __construct(ManagerRegistry $registry)
+    {
         parent::__construct($registry, CartItem::class);
     }
 
     public function save(CartItem $cart): void
     {
-        $this->entityManager->persist($cart);
-        $this->entityManager->flush();
+        $this->getEntityManager()->persist($cart);
+        $this->getEntityManager()->flush();
     }
 
     public function delete(CartItem $cartItem): void
     {
-        $this->entityManager->remove($cartItem);
-        $this->entityManager->flush();
+        $this->getEntityManager()->remove($cartItem);
+        $this->getEntityManager()->flush();
     }
 
     public function getById(int $cartItemId): ?CartItem
