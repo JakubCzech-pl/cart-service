@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Cart;
+
+use App\Model\EntityInterface;
 
 interface CartItemInterface extends EntityInterface
 {

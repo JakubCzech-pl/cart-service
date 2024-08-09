@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Cart;
 
-use App\Messenger\Cart\UpdateCartItemQuantity;
+use App\Messenger\Cart\RemoveProductFromCart;
 use App\Messenger\MessageSerializer;
-use App\Response\Cart\CartItemQuantityUpdatedResponseFactory;
+use App\Response\Cart\ProductRemovedResponseFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,25 +14,23 @@ use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: 'cart/item', name: 'update-cart-item-quantity', methods: 'PATCH')]
-class UpdateItemQuantityController extends AbstractController
+#[Route(path: 'cart', name: 'remove-product-from-cart', methods: 'DELETE')]
+class RemoveProductController extends AbstractController
 {
     use HandleTrait;
 
     public function __construct(
         private MessageBusInterface $messageBus,
         private MessageSerializer $messageSerializer,
-        private CartItemQuantityUpdatedResponseFactory $cartItemQuantityUpdatedResponseFactory
+        private ProductRemovedResponseFactory $productRemovedResponseFactory
     ) {}
 
     public function __invoke(Request $request): JsonResponse
     {
-        $cartItem = $this->handle(
-            $this->messageSerializer->deserialize($request->getContent(), UpdateCartItemQuantity::class)
+        $this->handle(
+            $this->messageSerializer->deserialize($request->getContent(), RemoveProductFromCart::class)
         );
 
-        $this->cartItemQuantityUpdatedResponseFactory->setCartItem($cartItem);
-
-        return $this->cartItemQuantityUpdatedResponseFactory->create();
+        return $this->productRemovedResponseFactory->create();
     }
 }

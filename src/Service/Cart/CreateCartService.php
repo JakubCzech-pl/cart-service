@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Cart;
 
-use App\Model\CartInterface;
+use App\Model\Cart\CartInterface;
 use App\Repository\CartRepository;
 use App\Service\EntityFactoryInterface;
 
@@ -15,9 +15,9 @@ class CreateCartService implements CreateCartServiceInterface
         private CartRepository $cartRepository
     ) {}
 
-    public function execute(): CartInterface
+    public function execute(CartCandidate $cartCandidate): CartInterface
     {
-        $cart = $this->entityFactory->create(new CartCandidate());
+        $cart = $this->entityFactory->create($cartCandidate);
 
         $this->cartRepository->save($cart);
 

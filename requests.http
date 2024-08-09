@@ -4,17 +4,48 @@ POST http://symfony.test/catalog/product
 Content-Type: application/json
 
 {
-  "name": "cvcvcvcv",
-  "price": 154,
-  "isAvailable": false
+  "name": "test 123 product",
+  "price": 440,
+  "isAvailable": true
 }
 
 ### Show Product
 
-GET http://symfony.test/catalog/product/6
+GET http://symfony.test/catalog/product/1
 Content-Type: application/json
 
 ### Create Cart
 
-POST http://symfony.test/cart/create
+POST http://symfony.test/cart
 Content-Type: application/json
+
+### Add Product To cart
+
+PUT http://symfony.test/cart
+Content-Type: application/json
+
+{
+  "cartId": 12,
+  "productId": 10,
+  "quantity": 3
+}
+
+### Remove Product From Cart
+
+DELETE http://symfony.test/cart
+Content-Type: application/json
+
+{
+  "cartItemId": 11,
+  "cartId": 12
+}
+
+### Update Cart Item Quantity
+
+PATCH http://symfony.test/cart/item
+Content-Type: application/json
+
+{
+  "cartItemId": 8,
+  "quantity": 5
+}

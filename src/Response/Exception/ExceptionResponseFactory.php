@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Response;
+namespace App\Response\Exception;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

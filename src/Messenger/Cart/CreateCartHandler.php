@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Messenger\Cart;
 
-use App\Model\CartInterface;
+use App\Model\Cart\CartInterface;
+use App\Service\Cart\CartCandidate;
 use App\Service\Cart\CreateCartService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -15,6 +16,6 @@ class CreateCartHandler
 
     public function __invoke(CreateCart $message): CartInterface
     {
-        return $this->createCartService->execute();
+        return $this->createCartService->execute(new CartCandidate());
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Response;
+namespace App\Response\Exception;
+
+use App\Response\ResponseFactoryInterface;
 
 interface ExceptionResponseFactoryInterface extends ResponseFactoryInterface
 {
-    public const MESSAGE_KEY = 'message';
-
     public function setException(\Throwable $exception): void;
 }

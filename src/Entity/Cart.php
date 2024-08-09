@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Model\Cart as CartModel;
+use App\Model\Cart\Cart as CartModel;
 use App\Repository\CartRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

@@ -9,13 +9,20 @@ use App\Exception\Cart\EntityCandidate\InactiveCartException;
 use App\Exception\Cart\EntityCandidate\NotPositiveProductQuantityException;
 use App\Exception\Cart\EntityCandidate\ProductNotAvailableException;
 use App\Exception\EntityCandidateArgumentException;
-use App\Model\CartInterface;
+use App\Model\Cart\CartInterface;
+use App\Model\Catalog\ProductInterface;
 use App\Model\EntityInterface;
-use App\Model\ProductInterface;
+use App\Service\Cart\Trait\ActiveCartValidatorTrait;
+use App\Service\Cart\Trait\CartItemQuantityValidatorTrait;
+use App\Service\Cart\Trait\ProductAvailabilityValidatorTrait;
 use App\Service\EntityCandidateInterface;
 
 class CartItemCandidate implements EntityCandidateInterface
 {
+    use CartItemQuantityValidatorTrait;
+    use ProductAvailabilityValidatorTrait;
+    use ActiveCartValidatorTrait;
+
     private CartInterface $cart;
     private ProductInterface $product;
     private float $price;
@@ -48,41 +55,5 @@ class CartItemCandidate implements EntityCandidateInterface
             $this->price,
             $this->quantity
         );
-    }
-
-    /**
-     * @throws InactiveCartException
-     */
-    private function validateCart(CartInterface $cart): void
-    {
-        if ($cart->isActive()) {
-            return;
-        }
-
-        throw new InactiveCartException();
-    }
-
-    /**
-     * @throws ProductNotAvailableException
-     */
-    private function validateProduct(ProductInterface $product): void
-    {
-        if ($product->isAvailable()) {
-            return;
-        }
-
-        throw new ProductNotAvailableException();
-    }
-
-    /**
-     * @throws NotPositiveProductQuantityException
-     */
-    private function validateQuantity(int $quantity): void
-    {
-        if ($quantity >= 1) {
-            return;
-        }
-
-        throw new NotPositiveProductQuantityException();
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Cart;
 
 use App\Entity\Cart;
-use App\Model\CartItemInterface;
+use App\Model\Cart\CartItemInterface;
 use App\Model\EntityInterface;
 use App\Service\EntityCandidateInterface;
 

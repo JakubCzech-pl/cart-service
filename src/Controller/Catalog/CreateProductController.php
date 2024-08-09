@@ -7,6 +7,7 @@ namespace App\Controller\Catalog;
 use App\Messenger\Catalog\CreateProduct;
 use App\Messenger\MessageInterface;
 use App\Messenger\MessageSerializer;
+use App\Response\Catalog\CreatedProductResponseFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ class CreateProductController extends AbstractController
     public function __construct(
         private MessageSerializer $messageSerializer,
         private MessageBusInterface $messageBus,
+        private CreatedProductResponseFactory $createdProductResponseFactory,
     ) {}
 
     public function __invoke(Request $request): JsonResponse
@@ -30,7 +32,9 @@ class CreateProductController extends AbstractController
             $this->createMessage($request->getContent())
         );
 
-        return new JsonResponse(['productId' => $product->getId()]);
+        $this->createdProductResponseFactory->setProduct($product);
+
+        return $this->createdProductResponseFactory->create();
     }
 
     private function createMessage(string $requestBody): MessageInterface

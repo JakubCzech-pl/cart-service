@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ProductRepository extends ServiceEntityRepository
@@ -22,5 +23,18 @@ class ProductRepository extends ServiceEntityRepository
     {
         $this->entityManager->persist($product);
         $this->entityManager->flush();
+    }
+
+    public function getById(int $productId): ?Product
+    {
+        try {
+            return $this->createQueryBuilder('p')
+                ->where('p.id = :productId')
+                ->setParameter('productId', $productId)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException) {
+            return null;
+        }
     }
 }

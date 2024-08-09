@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Cart;
 
-use Symfony\Contracts\Cache\ItemInterface;
+use App\Model\EntityInterface;
 
 interface CartInterface extends EntityInterface
 {
@@ -12,8 +12,9 @@ interface CartInterface extends EntityInterface
      * @return CartItemInterface[]
      */
     public function getItems(): array;
-    public function addItem(ItemInterface $item): void;
-    public function removeItem(ItemInterface $item): void;
+    public function addItem(CartItemInterface $item): void;
+    public function removeItem(CartItemInterface $item): void;
+    public function hasItem(CartItemInterface $item): bool;
     public function getTotalPrice(): float;
     public function getTotalQuantity(): int;
     public function isActive(): bool;

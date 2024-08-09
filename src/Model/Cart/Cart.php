@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Cart;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class Cart implements CartInterface
 {
@@ -33,14 +32,19 @@ class Cart implements CartInterface
         return $this->items->getValues();
     }
 
-    public function addItem(ItemInterface $item): void
+    public function addItem(CartItemInterface $item): void
     {
         $this->items->add($item);
     }
 
-    public function removeItem(ItemInterface $item): void
+    public function removeItem(CartItemInterface $item): void
     {
         $this->items->removeElement($item);
+    }
+
+    public function hasItem(CartItemInterface $item): bool
+    {
+        return $this->items->contains($item);
     }
 
     public function getTotalPrice(): float

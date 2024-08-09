@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Catalog;
 
-use App\Model\ProductInterface;
+use App\Model\Catalog\ProductInterface;
 
 interface CreateProductServiceInterface
 {
-    public function execute(string $name, float $price, bool $isAvailable): ProductInterface;
+    public function execute(ProductCandidate $productCandidate): ProductInterface;
 }
