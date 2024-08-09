@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Embeddable]
 class Person extends PersonModel
 {
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $firstName;
 
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $lastName;
 
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $phoneNumber;
 }

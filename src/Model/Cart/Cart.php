@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Cart;
 
+use App\Model\Address\AddressInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -11,11 +12,12 @@ class Cart implements CartInterface
 {
     protected int $id;
     protected Collection $items;
-    protected bool $isActive;
 
-    public function __construct(bool $isActive, CartItemInterface ...$items)
-    {
-        $this->isActive = $isActive;
+    public function __construct(
+        protected ?AddressInterface $address,
+        protected bool $isActive,
+        CartItemInterface ...$items
+    ) {
         $this->items = new ArrayCollection($items);
     }
 
@@ -70,5 +72,15 @@ class Cart implements CartInterface
     public function isActive(): bool
     {
        return $this->isActive;
+    }
+
+    public function addAddress(AddressInterface $address): void
+    {
+        $this->address = $address;
+    }
+
+    public function getAddress(): ?AddressInterface
+    {
+        return $this->address;
     }
 }

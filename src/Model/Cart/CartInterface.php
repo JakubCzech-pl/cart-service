@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Cart;
 
+use App\Model\Address\AddressInterface;
 use App\Model\EntityInterface;
 
 interface CartInterface extends EntityInterface
@@ -18,4 +19,6 @@ interface CartInterface extends EntityInterface
     public function getTotalPrice(): float;
     public function getTotalQuantity(): int;
     public function isActive(): bool;
+    public function addAddress(AddressInterface $address): void;
+    public function getAddress(): ?AddressInterface;
 }

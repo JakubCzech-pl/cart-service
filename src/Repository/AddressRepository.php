@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Address;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 class AddressRepository extends ServiceEntityRepository
@@ -19,5 +20,18 @@ class AddressRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->persist($address);
         $this->getEntityManager()->flush();
+    }
+
+    public function getById(int $addressId): ?Address
+    {
+        try {
+            return $this->createQueryBuilder('a')
+                ->where('a.id = :id')
+                ->setParameter('id', $addressId)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException) {
+            return null;
+        }
     }
 }

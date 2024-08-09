@@ -23,6 +23,6 @@ class CartCandidate implements EntityCandidateInterface
 
     public function toEntity(): EntityInterface
     {
-        return new Cart(true, ...$this->cartItems);
+        return new Cart(null, true, ...$this->cartItems);
     }
 }

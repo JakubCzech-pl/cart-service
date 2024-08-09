@@ -10,15 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Embeddable]
 class Region extends RegionModel
 {
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $countryCode;
 
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $regionName;
 
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $city;
 
-    #[ORM\Column(type: "string")]
+    #[ORM\Column(type: 'string')]
     protected string $postcode;
 }

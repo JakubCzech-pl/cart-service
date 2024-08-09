@@ -17,7 +17,7 @@ class CartItem extends CartItemModel
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
     #[Ignore]

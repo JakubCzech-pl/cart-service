@@ -33,6 +33,9 @@ class CartResponseFactory implements CartResponseFactoryInterface
 
     private function normalizeCart(): array
     {
-        return $this->serializer->normalize($this->cart);
+        $cartNormalized = $this->serializer->normalize($this->cart);
+        $cartNormalized['addressId'] = $this->cart->getAddress()?->getId();
+
+        return $cartNormalized;
     }
 }

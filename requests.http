@@ -82,3 +82,13 @@ Content-Type: application/json
 
 GET http://symfony.test/address/1
 Content-Type: application/json
+
+### Add Address For cart
+
+PUT http://symfony.test/cart/address
+Content-Type: application/json
+
+{
+  "cartId":1,
+  "addressId":1
+}
