@@ -23,7 +23,6 @@ class ExceptionResponseFactory implements ExceptionResponseFactoryInterface
 
     public function create(): JsonResponse
     {
-        exit(var_dump($this->exception->getMessage()));
         return match (true) {
             $this->exception instanceof MissingConstructorArgumentsException => $this->getMissingArgumentsResponse($this->exception),
             $this->exception instanceof HandlerFailedException => $this->getInvalidEntityCandidateException($this->exception),
