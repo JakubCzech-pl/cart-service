@@ -11,5 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Street extends StreetModel
 {
     #[ORM\Column(type: 'string')]
-    protected string $street;
+    protected string $streetName;
+
+    #[ORM\Column(type: 'string')]
+    protected string $streetNumber;
+
+    #[ORM\Column(type: 'string')]
+    protected string $streetAddition;
 }

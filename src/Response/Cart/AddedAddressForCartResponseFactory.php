@@ -11,6 +11,6 @@ class AddedAddressForCartResponseFactory implements ResponseFactoryInterface
 {
     public function create(): JsonResponse
     {
-        return new JsonResponse(['Address assigned to Cart']);
+        return new JsonResponse([self::MESSAGE_KEY => 'Address assigned to Cart']);
     }
 }

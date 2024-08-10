@@ -24,22 +24,22 @@ class ExceptionResponseFactory implements ExceptionResponseFactoryInterface
     public function create(): JsonResponse
     {
         return match (true) {
-            $this->exception instanceof MissingConstructorArgumentsException => $this->getMissingArgumentsResponse($this->exception),
-            $this->exception instanceof HandlerFailedException => $this->getInvalidEntityCandidateException($this->exception),
+            $this->exception instanceof MissingConstructorArgumentsException => $this->getMissingArgumentsResponse(),
+            $this->exception instanceof HandlerFailedException => $this->getHandlerFailedExceptionResponse($this->exception),
             $this->exception instanceof NotFoundHttpException => $this->getEntityNotFoundResponse(),
             default => $this->getDefaultResponse()
         };
     }
 
-    private function getMissingArgumentsResponse(\Throwable $exception): JsonResponse
+    private function getMissingArgumentsResponse(): JsonResponse
     {
         return new JsonResponse(
-            [self::MESSAGE_KEY => $exception->getMessage()],
+            [self::MESSAGE_KEY => 'Request data is incomplete'],
             Response::HTTP_UNPROCESSABLE_ENTITY
         );
     }
 
-    private function getInvalidEntityCandidateException(\Throwable $exception): JsonResponse
+    private function getHandlerFailedExceptionResponse(\Throwable $exception): JsonResponse
     {
         return new JsonResponse(
             [self::MESSAGE_KEY => $exception->getPrevious()?->getMessage() ?? self::DEFAULT_MESSAGE],
@@ -49,11 +49,17 @@ class ExceptionResponseFactory implements ExceptionResponseFactoryInterface
 
     private function getEntityNotFoundResponse(): JsonResponse
     {
-        return new JsonResponse('Entity not found', Response::HTTP_NOT_FOUND);
+        return new JsonResponse(
+            [self::MESSAGE_KEY => 'Entity not found'],
+            Response::HTTP_NOT_FOUND
+        );
     }
 
     private function getDefaultResponse(): JsonResponse
     {
-        return new JsonResponse(self::DEFAULT_MESSAGE, Response::HTTP_BAD_REQUEST);
+        return new JsonResponse(
+            [self::MESSAGE_KEY =>self::DEFAULT_MESSAGE],
+            Response::HTTP_BAD_REQUEST
+        );
     }
 }

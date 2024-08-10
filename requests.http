@@ -41,7 +41,7 @@ DELETE http://symfony.test/cart
 Content-Type: application/json
 
 {
-  "cartItemId": 11,
+  "cartItemId": 8,
   "cartId": 12
 }
 

@@ -85,7 +85,7 @@ class AddProductToCartHandler
                 $quantity
             );
         } catch (InactiveCartException) {
-            throw new CouldNotAddProductToCartException('Cart not found');
+            throw new CouldNotAddProductToCartException('Cannot add product to Inactive Cart');
         } catch (ProductNotAvailableException) {
             throw new CouldNotAddProductToCartException('Product not available at the moment');
         } catch (NotPositiveProductQuantityException) {

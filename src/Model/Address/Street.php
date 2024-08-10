@@ -6,20 +6,11 @@ namespace App\Model\Address;
 
 class Street implements StreetInterface
 {
-    protected string $street;
-
     public function __construct(
-        private string $streetName,
-        private string $streetNumber,
-        private string $streetAddition
-    ) {
-        $this->street = \sprintf(
-            '%s %s %s',
-            $streetName,
-            $streetNumber,
-            $streetAddition
-        );
-    }
+        protected string $streetName,
+        protected string $streetNumber,
+        protected string $streetAddition
+    ) {}
 
     public function getStreetName(): string
     {

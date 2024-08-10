@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Messenger\Cart;
 
 use App\Exception\Cart\CouldNotAddAddressForCartException;
+use App\Exception\Cart\EntityCandidate\InactiveCartException;
 use App\Model\Address\AddressInterface;
 use App\Model\Cart\CartInterface;
 use App\Repository\AddressRepository;
@@ -27,9 +28,9 @@ class AddAddressHandler
      */
     public function __invoke(AddAddress $message): void
     {
-        $addAddressCandidate = new AddAddressCandidate(
+        $addAddressCandidate = $this->createAddAddressCandidate(
             $this->getCart($message->cartId),
-            $this->getAddress($message->addressId)
+            $this->getAddress($message->addressId),
         );
 
         $this->addAddressService->execute($addAddressCandidate);
@@ -59,5 +60,17 @@ class AddAddressHandler
         }
 
         return $address;
+    }
+
+    /**
+     * @throws CouldNotAddAddressForCartException
+     */
+    private function createAddAddressCandidate(CartInterface $cart, AddressInterface $address): AddAddressCandidate
+    {
+        try {
+            return new AddAddressCandidate($cart, $address);
+        } catch (InactiveCartException) {
+            throw new CouldNotAddAddressForCartException('Cannot add address to an inactive cart');
+        }
     }
 }
