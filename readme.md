@@ -19,5 +19,5 @@ All application state changes, such as adding or removing products and adding th
 Services should accept Candidate value objects that has validated values in it. With it each service can handle action properly.
 
 All responses from application are created via Factories in *App\Response* namespace.
-If response factory needs to be aware of object then it should implement interface that would indicate for concrete strategy
-For example *App\Response\Cart\CartResponseFactory* implements *App\Response\Cart\CartResponseFactoryInterface* with method *setCart* for further creating response with cart details
+If response factory needs to be aware of object then it should implement interface that would indicate for concrete strategy.
+For example *App\Response\Cart\CartResponseFactory* implements *App\Response\Cart\CartResponseFactoryInterface* with method *setCart* for further creating response with cart details.
