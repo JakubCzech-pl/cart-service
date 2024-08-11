@@ -4,14 +4,14 @@ POST http://symfony.test/catalog/product
 Content-Type: application/json
 
 {
-  "name": "test 123 product",
-  "price": 440,
+  "name": "Foo Product",
+  "price": 123,
   "isAvailable": true
 }
 
 ### Show Product
 
-GET http://symfony.test/catalog/product/1
+GET http://symfony.test/catalog/product/{intId}
 Content-Type: application/json
 
 ### Create Cart
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ### Show Cart
 
-GET http://symfony.test/cart/1
+GET http://symfony.test/cart/{intId}
 Content-Type: application/json
 
 ### Add Product To cart
@@ -30,8 +30,8 @@ PUT http://symfony.test/cart
 Content-Type: application/json
 
 {
-  "cartId": 12,
-  "productId": 10,
+  "cartId": 10,
+  "productId": 20,
   "quantity": 3
 }
 
@@ -41,8 +41,8 @@ DELETE http://symfony.test/cart
 Content-Type: application/json
 
 {
-  "cartItemId": 8,
-  "cartId": 12
+  "cartItemId": 1,
+  "cartId": 10
 }
 
 ### Update Cart Item Quantity
@@ -51,8 +51,8 @@ PATCH http://symfony.test/cart/item
 Content-Type: application/json
 
 {
-  "cartItemId": 8,
-  "quantity": 5
+  "cartItemId": 6,
+  "quantity": 12
 }
 
 ### Create Address
@@ -64,7 +64,7 @@ Content-Type: application/json
   "person": {
     "firstName": "Jan",
     "lastName": "Nowak",
-    "phoneNumber": "+48 123"
+    "phoneNumber": "+48 123456789"
   },
   "region": {
     "regionName": "Podkarpacie",
@@ -80,7 +80,7 @@ Content-Type: application/json
 
 ### Show Address
 
-GET http://symfony.test/address/1
+GET http://symfony.test/address/{intId}
 Content-Type: application/json
 
 ### Add Address For cart
@@ -89,6 +89,6 @@ PUT http://symfony.test/cart/address
 Content-Type: application/json
 
 {
-  "cartId":1,
+  "cartId":10,
   "addressId":1
 }
