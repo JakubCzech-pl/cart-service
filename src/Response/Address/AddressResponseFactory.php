@@ -7,11 +7,11 @@ namespace App\Response\Address;
 use App\Model\Address\AddressInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class AddressResponseFactory implements AddressResponseFactoryInterface
 {
-    public function __construct(private SerializerInterface $serializer) {}
+    public function __construct(private NormalizerInterface $normalizer) {}
 
     private ?AddressInterface $address = null;
 
@@ -31,6 +31,6 @@ class AddressResponseFactory implements AddressResponseFactoryInterface
 
     private function normalizeAddress(): array
     {
-        return $this->serializer->normalize($this->address);
+        return $this->normalizer->normalize($this->address);
     }
 }

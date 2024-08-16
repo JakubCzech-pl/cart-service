@@ -63,7 +63,7 @@ class AddAddressControllerTest extends WebTestCase
         );
     }
 
-    public function testAddAddressToInactiveCart(): void
+    public function testAddAddressForInactiveCart(): void
     {
         $uri = '/cart/address';
         $this->client->request(
@@ -80,6 +80,86 @@ class AddAddressControllerTest extends WebTestCase
 
         self::assertEquals(
             ['message' => 'Cannot add address to an inactive cart'],
+            $response
+        );
+    }
+
+    public function testAddNotExistingAddressForCart(): void
+    {
+        $uri = '/cart/address';
+        $this->client->request(
+            'PUT',
+            $uri,
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            \json_encode(['cartId' => 1, 'addressId' => 10])
+        );
+        self::assertResponseStatusCodeSame(422);
+
+        $response = $this->getJsonResponseAsArray();
+        self::assertEquals(
+            ['message' => 'Address not found'],
+            $response
+        );
+    }
+
+    public function testAddNotExistingAddressForInactiveActiveCart(): void
+    {
+        $uri = '/cart/address';
+        $this->client->request(
+            'PUT',
+            $uri,
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            \json_encode(['cartId' => 2, 'addressId' => 10])
+        );
+        self::assertResponseStatusCodeSame(422);
+
+        $response = $this->getJsonResponseAsArray();
+        self::assertEquals(
+            ['message' => 'Address not found'],
+            $response
+        );
+    }
+
+    public function testAddAddressForNotExistingCart(): void
+    {
+        $uri = '/cart/address';
+        $this->client->request(
+            'PUT',
+            $uri,
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            \json_encode(['cartId' => 7, 'addressId' => 1])
+        );
+        self::assertResponseStatusCodeSame(422);
+
+        $response = $this->getJsonResponseAsArray();
+        self::assertEquals(
+            ['message' => 'Cart not found'],
+            $response
+        );
+    }
+
+    public function testAddNotExistingAddressToNotExistingCart(): void
+    {
+        $uri = '/cart/address';
+        $this->client->request(
+            'PUT',
+            $uri,
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            \json_encode(['cartId' => 7, 'addressId' => 8])
+        );
+        self::assertResponseStatusCodeSame(422);
+
+        $response = $this->getJsonResponseAsArray();
+        self::assertEquals(
+            ['message' => 'Cart not found'],
             $response
         );
     }

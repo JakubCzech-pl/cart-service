@@ -31,9 +31,6 @@ class CreateCartControllerTest extends WebTestCase
             $response
         );
 
-//        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
-//        $cart = $entityManager->getRepository(Cart::class)->find($response['cartId']);
-
         $this->client->request(
             'GET',
             $uri . '/' . $response['cartId'],
