@@ -7,13 +7,14 @@ namespace App\Response\Cart;
 use App\Model\Cart\CartInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CartResponseFactory implements CartResponseFactoryInterface
 {
     private ?CartInterface $cart = null;
 
-    public function __construct(private SerializerInterface $serializer) {}
+    public function __construct(private NormalizerInterface $normalizer) {}
 
     public function setCart(CartInterface $cart): void
     {
@@ -33,9 +34,15 @@ class CartResponseFactory implements CartResponseFactoryInterface
 
     private function normalizeCart(): array
     {
-        $cartNormalized = $this->serializer->normalize($this->cart);
-        $cartNormalized['addressId'] = $this->cart->getAddress()?->getId();
+        try {
+            $cartNormalized = $this->normalizer->normalize($this->cart);
+            $cartNormalized['addressId'] = $this->cart->getAddress()?->getId();
 
-        return $cartNormalized;
+            return $cartNormalized;
+        } catch (ExceptionInterface) {
+            return [
+                self::MESSAGE_KEY => 'Cannot Process this Cart at the moment.',
+            ];
+        }
     }
 }
