@@ -9,6 +9,8 @@ use App\Exception\Address\Person\PersonNameContainDigitsException;
 
 trait PersonNameValidatorTrait
 {
+    private const DIGITS_REGEX = '/\d/';
+
     /**
      * @throws EmptyPersonNameException|PersonNameContainDigitsException
      */
@@ -25,6 +27,6 @@ trait PersonNameValidatorTrait
 
     private function hasNameDigits(string $name): bool
     {
-        return \preg_match('/\d/', $name) !== 0;
+        return \preg_match(self::DIGITS_REGEX, $name) !== 0;
     }
 }

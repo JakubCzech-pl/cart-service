@@ -7,11 +7,11 @@ namespace App\Response\Catalog;
 use App\Model\Catalog\ProductInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ProductResponseFactory implements ProductResponseFactoryInterface
 {
-    public function __construct(private SerializerInterface $serializer) {}
+    public function __construct(private NormalizerInterface $normalizer) {}
 
     private ?ProductInterface $product = null;
 
@@ -34,6 +34,6 @@ class ProductResponseFactory implements ProductResponseFactoryInterface
 
     private function normalizeProduct(): array
     {
-        return $this->serializer->normalize($this->product);
+        return $this->normalizer->normalize($this->product);
     }
 }

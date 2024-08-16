@@ -11,6 +11,7 @@ use App\Entity\Street;
 use App\Response\Address\AddressResponseFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class AddressResponseFactoryTest extends TestCase
@@ -42,9 +43,7 @@ class AddressResponseFactoryTest extends TestCase
             'city' => 'Rzeszów',
             'countryCode' => 'PL'
         ]);
-        $addressResponseFactory = new AddressResponseFactory(
-            $normalizerMock
-        );
+        $addressResponseFactory = new AddressResponseFactory($normalizerMock);
 
         $addressResponseFactory->setAddress($address);
 
@@ -76,9 +75,7 @@ class AddressResponseFactoryTest extends TestCase
     public function testCreateAddressResponseWithoutAddressSet(): void
     {
         $normalizerMock = $this->createMock(NormalizerInterface::class);
-        $addressResponseFactory = new AddressResponseFactory(
-            $normalizerMock
-        );
+        $addressResponseFactory = new AddressResponseFactory($normalizerMock);
 
         $createdResponse = $addressResponseFactory->create();
 
@@ -86,6 +83,30 @@ class AddressResponseFactoryTest extends TestCase
         self::assertEquals(202, $createdResponse->getStatusCode());
         self::assertEquals(
             [],
+            \json_decode($createdResponse->getContent(), true)
+        );
+    }
+
+    public function testCreateAddressResponseWithNormalizerException(): void
+    {
+        $addressMock = $this->createMock(Address::class);
+
+        $normalizerMock = $this->createMock(NormalizerInterface::class);
+        $normalizerMock
+            ->method('normalize')
+            ->with($addressMock)
+            ->willThrowException($this->createMock(ExceptionInterface::class))
+        ;
+
+        $addressResponseFactory = new AddressResponseFactory($normalizerMock);
+        $addressResponseFactory->setAddress($addressMock);
+
+        $createdResponse = $addressResponseFactory->create();
+
+        self::assertInstanceOf(JsonResponse::class, $createdResponse);
+        self::assertEquals(200, $createdResponse->getStatusCode());
+        self::assertEquals(
+            ['message' => 'Cannot process this Address at the moment.'],
             \json_decode($createdResponse->getContent(), true)
         );
     }

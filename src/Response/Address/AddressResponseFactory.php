@@ -7,6 +7,7 @@ namespace App\Response\Address;
 use App\Model\Address\AddressInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class AddressResponseFactory implements AddressResponseFactoryInterface
@@ -31,6 +32,12 @@ class AddressResponseFactory implements AddressResponseFactoryInterface
 
     private function normalizeAddress(): array
     {
-        return $this->normalizer->normalize($this->address);
+        try {
+            return $this->normalizer->normalize($this->address);
+        } catch (ExceptionInterface) {
+            return [
+                self::MESSAGE_KEY => 'Cannot process this Address at the moment.'
+            ];
+        }
     }
 }

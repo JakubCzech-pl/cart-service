@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Messenger;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class MessageSerializer
@@ -12,11 +13,11 @@ class MessageSerializer
 
     public function deserialize(string $json, string $type): MessageInterface
     {
-        return $this->serializer->deserialize($json, $type, 'json');
+        return $this->serializer->deserialize($json, $type, JsonEncoder::FORMAT);
     }
 
     public function serialize(MessageInterface $message): string
     {
-        return $this->serializer->serialize($message, 'json');
+        return $this->serializer->serialize($message, JsonEncoder::FORMAT);
     }
 }
