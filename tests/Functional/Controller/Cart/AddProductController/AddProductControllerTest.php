@@ -59,7 +59,7 @@ class AddProductControllerTest extends WebTestCase
                     0 =>  [
                         'id' => 1,
                         'quantity' => 2,
-                        'price' => 12.34,
+                        'price' => 24.68,
                         'productName' => 'Test Product 1'
                     ]
                 ],

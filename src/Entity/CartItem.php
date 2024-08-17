@@ -33,5 +33,5 @@ class CartItem extends CartItemModel
     protected int $quantity;
 
     #[ORM\Column(type: 'float', nullable: false)]
-    protected float $price;
+    protected float $unitPrice;
 }

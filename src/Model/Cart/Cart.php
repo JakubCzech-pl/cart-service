@@ -53,7 +53,7 @@ class Cart implements CartInterface
     {
         $totalPrice = 0;
         foreach ($this->items as $item) {
-            $totalPrice += $item->getPrice() * $item->getQuantity();
+            $totalPrice += $item->getPrice();
         }
 
         return $totalPrice;

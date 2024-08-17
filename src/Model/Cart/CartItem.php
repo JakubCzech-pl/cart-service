@@ -12,13 +12,13 @@ class CartItem implements CartItemInterface
     protected CartInterface $cart;
     protected ProductInterface $product;
     protected int $quantity;
-    protected float $price;
+    protected float $unitPrice;
 
-    public function __construct(CartInterface $cart, ProductInterface $product, float $price,  int $quantity)
+    public function __construct(CartInterface $cart, ProductInterface $product, float $unitPrice, int $quantity)
     {
         $this->cart = $cart;
         $this->product = $product;
-        $this->price = $price;
+        $this->unitPrice = $unitPrice;
         $this->quantity = $quantity;
     }
 
@@ -44,6 +44,6 @@ class CartItem implements CartItemInterface
 
     public function getPrice(): float
     {
-        return $this->price;
+        return $this->unitPrice * $this->quantity;
     }
 }

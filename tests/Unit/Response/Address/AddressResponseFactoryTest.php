@@ -81,10 +81,7 @@ class AddressResponseFactoryTest extends TestCase
 
         self::assertInstanceOf(JsonResponse::class, $createdResponse);
         self::assertEquals(202, $createdResponse->getStatusCode());
-        self::assertEquals(
-            [],
-            \json_decode($createdResponse->getContent(), true)
-        );
+        self::assertEmpty(\json_decode($createdResponse->getContent(), true));
     }
 
     public function testCreateAddressResponseWithNormalizerException(): void

@@ -57,7 +57,7 @@ class UpdateQuantityControllerTest extends WebTestCase
                     0 =>  [
                         'id' => 2,
                         'quantity' => 10,
-                        'price' => 129.34,
+                        'price' => 1293.4,
                         'productName' => 'Test Product 2'
                     ]
                 ],

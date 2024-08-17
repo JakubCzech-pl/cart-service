@@ -59,10 +59,7 @@ class CartResponseFactoryTest extends TestCase
         $response = $cartResponseFactory->create();
         self::assertInstanceOf(JsonResponse::class, $response);
         self::assertEquals(202, $response->getStatusCode());
-        self::assertEquals(
-            [],
-            \json_decode($response->getContent(), true)
-        );
+        self::assertEmpty(\json_decode($response->getContent(), true));
     }
 
     public function testCreateResponseWithNormalizerException(): void
