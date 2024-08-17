@@ -46,9 +46,6 @@ class AddedProductResponseFactoryTest extends TestCase
         $response = $addedProductResponseFactory->create();
         self::assertInstanceOf(JsonResponse::class, $response);
         self::assertEquals(202, $response->getStatusCode());
-        self::assertEquals(
-            [],
-            \json_decode($response->getContent(), true)
-        );
+        self::assertEmpty(\json_decode($response->getContent(), true));
     }
 }
