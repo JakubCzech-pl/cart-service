@@ -44,9 +44,6 @@ class CreatedCartResponseFactoryTest extends TestCase
 
         self::assertInstanceOf(JsonResponse::class, $response);
         self::assertEquals(202, $response->getStatusCode());
-        self::assertEquals(
-            [],
-            \json_decode($response->getContent(), true)
-        );
+        self::assertEmpty(\json_decode($response->getContent(), true));
     }
 }
